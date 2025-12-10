@@ -83,6 +83,14 @@
     @apply text-black dark:text-white;
     @apply decoration-black/50 dark:decoration-white/50;
   }
+
+  article :not(pre) > code {
+    @apply rounded bg-black/5 px-1.5 py-0.5 font-mono text-sm dark:bg-white/10;
+  }
+  article :not(pre) > code::before,
+  article :not(pre) > code::after {
+    content: none;
+  }
 }
 
 .animate {
