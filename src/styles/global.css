@@ -29,6 +29,10 @@
   }
 }
 
+li::marker {
+  color: currentColor;
+}
+
 @layer utilities {
   html {
     overflow-y: auto;
