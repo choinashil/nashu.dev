@@ -27,10 +27,18 @@ interface Props {
   image?: string;
 }
 
+const isDev = import.meta.env.DEV;
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image = "/astro-micro.jpg" } = Astro.props;
 ---
+
+<script is:inline define:vars={{ isDev }}>
+  if (isDev) {
+    document.documentElement.classList.add("dev");
+  }
+</script>
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />

@@ -102,6 +102,12 @@
   @apply translate-y-0 opacity-100;
 }
 
+/* 개발 모드에서 애니메이션 비활성화 */
+html.dev .animate {
+  @apply translate-y-0 opacity-100;
+  transition: none;
+}
+
 html #back-to-top {
   @apply pointer-events-none opacity-0;
 }
