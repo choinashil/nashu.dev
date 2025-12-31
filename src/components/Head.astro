@@ -158,20 +158,34 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
   }
 
   function addCopyCodeButtons() {
-    let copyButtonLabel = "📋";
+    const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+    const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
     let codeBlocks = Array.from(document.querySelectorAll("pre"));
 
     async function copyCode(codeBlock, copyButton) {
-      const codeText = codeBlock.innerText;
-      const buttonText = copyButton.innerText;
-      const textToCopy = codeText.replace(buttonText, "");
+      const codeText =
+        codeBlock.querySelector("code")?.innerText || codeBlock.innerText;
 
-      await navigator.clipboard.writeText(textToCopy);
-      copyButton.innerText = "✅";
+      await navigator.clipboard.writeText(codeText);
+      copyButton.innerHTML = checkIcon;
+      copyButton.classList.add("copied");
 
-      setTimeout(() => {
-        copyButton.innerText = copyButtonLabel;
-      }, 2000);
+      const hideTimeout = setTimeout(() => {
+        copyButton.innerHTML = copyIcon;
+        copyButton.classList.remove("copied");
+      }, 1500);
+
+      const handleMouseLeave = () => {
+        clearTimeout(hideTimeout);
+        copyButton.classList.remove("copied");
+
+        setTimeout(() => {
+          copyButton.innerHTML = copyIcon;
+        }, 100);
+        codeBlock.removeEventListener("mouseleave", handleMouseLeave);
+      };
+
+      codeBlock.addEventListener("mouseleave", handleMouseLeave);
     }
 
     for (let codeBlock of codeBlocks) {
@@ -179,8 +193,9 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
       wrapper.style.position = "relative";
 
       const copyButton = document.createElement("button");
-      copyButton.innerText = copyButtonLabel;
+      copyButton.innerHTML = copyIcon;
       copyButton.classList = "copy-code";
+      copyButton.setAttribute("aria-label", "코드 복사");
 
       codeBlock.setAttribute("tabindex", "0");
       codeBlock.appendChild(copyButton);
