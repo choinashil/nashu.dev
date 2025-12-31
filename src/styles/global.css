@@ -65,7 +65,7 @@ li::marker {
   }
 
   main {
-    @apply flex-1 py-32;
+    @apply flex-1 py-24 sm:py-32;
   }
 
   footer {
