@@ -72,6 +72,10 @@ li::marker {
     @apply py-6 text-sm;
   }
 
+  button {
+    @apply cursor-pointer;
+  }
+
   article {
     @apply prose prose-neutral dark:prose-invert prose-img:mx-auto prose-img:my-auto max-w-full;
     @apply prose-headings:font-semibold;
