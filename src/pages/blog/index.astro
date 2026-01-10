@@ -1,55 +1,38 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import ArrowCard from "@components/ArrowCard.astro";
 import { BLOG } from "@consts";
+import FormattedDate from "@components/FormattedDate.astro";
 
-const data = (await getCollection("blog"))
+const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-type Acc = {
-  [year: string]: CollectionEntry<"blog">[];
-};
-
-const posts = data.reduce((acc: Acc, post) => {
-  const year = post.data.date.getFullYear().toString();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
-  acc[year].push(post);
-  return acc;
-}, {});
-
-const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
 ---
 
 <Layout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
   <Container>
     <aside data-pagefind-ignore>
-      <div class="space-y-10">
-        <div class="space-y-4">
-          {
-            years.map((year) => (
-              <section class="animate space-y-4">
-                <div class="font-semibold text-black dark:text-white">
-                  {year}
-                </div>
-                <div>
-                  <ul class="not-prose flex flex-col gap-4">
-                    {posts[year].map((post) => (
-                      <li>
-                        <ArrowCard entry={post} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </section>
-            ))
-          }
-        </div>
-      </div>
+      <ul class="animate space-y-0">
+        {
+          posts.map((post) => (
+            <li>
+              <a
+                href={`/blog/${post.id}/`}
+                class="group block py-2 transition-colors hover:text-gray-500 dark:hover:text-gray-400"
+              >
+                <span class="text-sm text-black group-hover:text-gray-600 dark:text-white dark:group-hover:text-gray-300">
+                  {post.data.title}
+                </span>
+                <FormattedDate
+                  date={post.data.date}
+                  class="ml-1 text-xs text-gray-400 dark:text-gray-500"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </aside>
   </Container>
 </Layout>
