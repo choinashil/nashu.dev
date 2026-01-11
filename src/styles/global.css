@@ -104,6 +104,11 @@ li::marker {
   article :not(pre) > code::after {
     content: none;
   }
+
+  article li > p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 .animate {
