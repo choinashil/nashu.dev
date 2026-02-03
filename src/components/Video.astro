@@ -1,0 +1,16 @@
+---
+interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+const videoSrc = `/videos/${src}`;
+---
+
+<video
+  src={videoSrc}
+  controls
+  autoplay
+  muted
+  playsinline
+  class="block w-full"></video>
