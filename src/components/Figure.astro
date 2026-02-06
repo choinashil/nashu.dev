@@ -8,13 +8,13 @@ const { caption, width } = Astro.props;
 ---
 
 <figure
-  class={`my-6 ${width ? "mx-auto figure-width" : ""}`}
+  class={`my-6 flex-1 min-w-0 ${width ? "mx-auto figure-width" : ""}`}
   style={width ? `--figure-width: ${width}` : undefined}
 >
   <slot />
   {
     caption && (
-      <figcaption class="mt-2 text-center text-sm text-gray-600 italic dark:text-gray-400">
+      <figcaption class="mt-2 text-center text-sm wrap-break-word text-gray-600 italic dark:text-gray-400">
         {caption}
       </figcaption>
     )
