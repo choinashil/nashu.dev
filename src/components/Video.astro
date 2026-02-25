@@ -1,9 +1,10 @@
 ---
 interface Props {
   src: string;
+  loop?: boolean;
 }
 
-const { src } = Astro.props;
+const { src, loop = true } = Astro.props;
 const videoSrc = `/videos/${src}`;
 ---
 
@@ -11,6 +12,7 @@ const videoSrc = `/videos/${src}`;
   src={videoSrc}
   controls
   autoplay
+  loop={loop || undefined}
   muted
   playsinline
   class="block w-full"></video>
