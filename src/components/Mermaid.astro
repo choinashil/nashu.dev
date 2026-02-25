@@ -1,0 +1,44 @@
+---
+interface Props {
+  chart: string;
+  width?: string;
+}
+const { chart, width } = Astro.props;
+---
+
+<div class="mermaid-wrapper" style={width ? `max-width: ${width}` : undefined}>
+  <div class="mermaid" data-chart={chart}></div>
+</div>
+
+<style>
+  .mermaid-wrapper {
+    text-align: center;
+    margin: 1.5rem auto;
+  }
+  .mermaid-wrapper :global(svg) {
+    display: inline-block;
+    max-width: 100%;
+  }
+</style>
+
+<script>
+  import mermaid from "mermaid";
+
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: "dark",
+  });
+
+  document.addEventListener("astro:page-load", async () => {
+    const elements = document.querySelectorAll<HTMLElement>(".mermaid");
+    for (const el of elements) {
+      const chart = el.dataset.chart;
+      if (!chart) continue;
+      const { svg } = await mermaid.render(
+        `mermaid-${crypto.randomUUID().slice(0, 8)}`,
+        chart,
+      );
+      el.innerHTML = svg;
+    }
+  });
+</script>
