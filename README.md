@@ -1,3 +1,3 @@
-# (Nashu.dev)[https://nashu.vercel.app]
+# nashu.dev
 
 개발하면서 얻은 경험과 인사이트를 공유합니다 💭
