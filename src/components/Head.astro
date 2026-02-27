@@ -16,6 +16,7 @@ interface Props {
 }
 
 const isDev = import.meta.env.DEV;
+const isProd = import.meta.env.PROD;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
@@ -64,6 +65,19 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
 <script is:inline src="/pagefind/pagefind-ui.js"></script>
 
 <ClientRouter />
+
+<!-- Google Analytics -->
+{isProd && (
+  <>
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-J8J226N7MM"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-J8J226N7MM');
+    </script>
+  </>
+)}
 
 <script is:inline>
   function init() {
