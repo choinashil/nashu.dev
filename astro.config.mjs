@@ -4,6 +4,8 @@ import mdx from "@astrojs/mdx";
 import pagefind from "astro-pagefind";
 import tailwindcss from "@tailwindcss/vite";
 import rehypeExternalLinks from "rehype-external-links";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,6 +24,22 @@ export default defineConfig({
         {
           target: "_blank",
           rel: ["noopener", "noreferrer"],
+        },
+      ],
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "append",
+          properties: {
+            className: ["heading-anchor"],
+            ariaHidden: true,
+            tabIndex: -1,
+          },
+          content: {
+            type: "text",
+            value: "#",
+          },
         },
       ],
     ],

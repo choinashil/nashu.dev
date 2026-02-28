@@ -97,6 +97,17 @@ li::marker {
     @apply decoration-black/50 dark:decoration-white/50;
   }
 
+  article .heading-anchor {
+    @apply ml-1.5 no-underline opacity-0 transition-opacity duration-200;
+    @apply text-black/30 dark:text-white/30;
+  }
+  article :is(h2, h3, h4, h5, h6):hover .heading-anchor {
+    @apply opacity-100;
+  }
+  article .heading-anchor:hover {
+    @apply text-black/60 dark:text-white/60;
+  }
+
   article :not(pre) > code {
     @apply rounded bg-black/5 px-1.5 py-0.5 font-mono text-sm dark:bg-white/10;
   }
